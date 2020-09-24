@@ -83,6 +83,7 @@ class _MetroAppBarState extends State<MetroAppBar>
   Widget build(BuildContext context) {
     return Container(
       height: 56,
+      width: double.infinity,
       decoration: BoxDecoration(
           color: Theme.of(context).bottomAppBarColor,
           boxShadow: [
@@ -101,31 +102,38 @@ class _MetroAppBarState extends State<MetroAppBar>
           )),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            for (var pc in widget.primaryCommands) pc,
-            widget.secondaryCommands != null &&
-                    widget.secondaryCommands.any((element) => true)
-                ? PopupMenuButton<String>(
-                    onSelected: (command) {
-                      // Определить нужную команду
-                      final cmd = widget.secondaryCommands.singleWhere(
-                          (element) => element.commandName == command);
-                      cmd.onPressed();
-                    },
-                    itemBuilder: (BuildContext context) {
-                      return widget.secondaryCommands.map((e) {
-                        return PopupMenuItem<String>(
-                          value: e.commandName,
-                          child: e,
-                        );
-                      }).toList();
-                    },
-                  )
-                : SizedBox()
-          ],
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: SingleChildScrollView(
+            reverse: true,
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                for (var pc in widget.primaryCommands) pc,
+                widget.secondaryCommands != null &&
+                        widget.secondaryCommands.any((element) => true)
+                    ? PopupMenuButton<String>(
+                        onSelected: (command) {
+                          // Определить нужную команду
+                          final cmd = widget.secondaryCommands.singleWhere(
+                              (element) => element.commandName == command);
+                          cmd.onPressed();
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return widget.secondaryCommands.map((e) {
+                            return PopupMenuItem<String>(
+                              value: e.commandName,
+                              child: e,
+                            );
+                          }).toList();
+                        },
+                      )
+                    : SizedBox()
+              ],
+            ),
+          ),
         ),
       ),
     );
