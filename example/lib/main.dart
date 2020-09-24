@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_appbar/metro_appbar.dart';
 
 void main() {
   runApp(MyApp());
@@ -95,22 +96,42 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Expanded(
+                child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'You have pushed the button this many times:',
+                    ),
+                    Text(
+                      '$_counter',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                  ]),
+            )),
+            MetroAppBar(
+              primaryCommands: [
+                PrimaryCommand(
+                    onPressed: () {}, pic: Icons.ac_unit, text: "First")
+              ],
+              /*secondaryCommands: [
+                SecondaryCommand(
+                    commandName: "one", onPressed: () {}, text: "Review")
+              ],*/
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 60.0),
+        child: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+        ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
