@@ -13,9 +13,10 @@ class SecondaryCommand extends StatelessWidget {
   SecondaryCommand(
       {@required this.commandName,
       @required this.onPressed,
-      @required this.text,
+      this.text,
       this.style,
-      this.child});
+      this.child})
+      : assert(text != null || child != null);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class PrimaryCommand extends StatelessWidget {
             Text(
               text,
               maxLines: 1,
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(fontSize: 10), // Add color?
               overflow: TextOverflow.ellipsis,
             )
           ],
@@ -61,11 +62,15 @@ class PrimaryCommand extends StatelessWidget {
 }
 
 class MetroAppBar extends StatefulWidget {
+  final Color backgroundColor;
   final List<Widget> primaryCommands;
   final List<SecondaryCommand> secondaryCommands;
 
   const MetroAppBar(
-      {Key key, @required this.primaryCommands, this.secondaryCommands})
+      {Key key,
+      @required this.primaryCommands,
+      this.secondaryCommands,
+      this.backgroundColor})
       : super(key: key);
 
   @override
@@ -108,7 +113,6 @@ class _MetroAppBarState extends State<MetroAppBar>
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: Row(
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 for (var pc in widget.primaryCommands) pc,
