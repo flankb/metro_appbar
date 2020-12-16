@@ -3,24 +3,44 @@ library metro_appbar;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class SecondaryCommand extends StatelessWidget {
-  final String commandName;
-  final VoidCallback onPressed;
-  final String text;
-  final TextStyle style;
-  final Widget child;
+// abstract class SimpleCommand {
+//   final String commandName;
+//   final VoidCallback onPressed;
 
-  SecondaryCommand(
-      {@required this.commandName,
-      @required this.onPressed,
-      this.text,
-      this.style,
-      this.child})
-      : assert(text != null || child != null);
+//   SimpleCommand(this.commandName, this.onPressed);
+// }
+
+/// Collapsed command in Popup Menu.
+/// One of child or [text] with [onPressed] may be provided, but not both
+class SecondaryCommand extends StatelessWidget {
+  //final String commandName;
+
+  /// Func will emited on click if you pass [text]
+  final VoidCallback onPressed;
+
+  /// If provided, the [text] is used for this command
+  /// and the item will behave like an [Text].
+  final String text;
+
+  /// You may pass style of text if you provide [text]
+  final TextStyle style;
+
+  // /// Provide widget represented this Item
+  // /// If provided, [child] is the widget used for this button
+  // /// and the button will utilize an [InkWell] for taps.
+  // final Widget child;
+
+  SecondaryCommand({
+    //@required this.commandName,
+    @required this.onPressed,
+    this.text,
+    this.style,
+    /*this.child*/
+  }) : assert(text != null /* || child != null*/);
 
   @override
   Widget build(BuildContext context) {
-    return child ?? Text(text, style: style);
+    return /*child ??*/ Text(text, style: style);
   }
 }
 
@@ -64,7 +84,7 @@ class PrimaryCommand extends StatelessWidget {
 class MetroAppBar extends StatefulWidget {
   final Color backgroundColor;
   final List<Widget> primaryCommands;
-  final List<SecondaryCommand> secondaryCommands;
+  final List<Widget> secondaryCommands;
 
   const MetroAppBar(
       {Key key,
@@ -79,9 +99,17 @@ class MetroAppBar extends StatefulWidget {
 
 class _MetroAppBarState extends State<MetroAppBar>
     with SingleTickerProviderStateMixin {
+  Map<int, Widget> _secondaryCommandWraps;
+
   @override
   void initState() {
     super.initState();
+
+    // Сделаем словарь к которому по ключу генерируемой команды привяжем Виджет
+    // TODO Проверить, что перестраивается при ребилде
+    widget.secondaryCommands.asMap().forEach((index, value) {
+      _secondaryCommandWraps[index] = value;
+    });
   }
 
   @override
@@ -118,18 +146,20 @@ class _MetroAppBarState extends State<MetroAppBar>
                 for (var pc in widget.primaryCommands) pc,
                 widget.secondaryCommands != null &&
                         widget.secondaryCommands.any((element) => true)
-                    ? PopupMenuButton<String>(
+                    ? PopupMenuButton<int>(
                         onSelected: (command) {
                           // Определить нужную команду
-                          final cmd = widget.secondaryCommands.singleWhere(
-                              (element) => element.commandName == command);
-                          cmd.onPressed();
+                          final cmdWidget = _secondaryCommandWraps[command];
+
+                          if (cmdWidget is SecondaryCommand) {
+                            cmdWidget.onPressed();
+                          }
                         },
                         itemBuilder: (BuildContext context) {
-                          return widget.secondaryCommands.map((e) {
-                            return PopupMenuItem<String>(
-                              value: e.commandName,
-                              child: e,
+                          return _secondaryCommandWraps.entries.map((e) {
+                            return PopupMenuItem<int>(
+                              value: e.key,
+                              child: e.value,
                             );
                           }).toList();
                         },

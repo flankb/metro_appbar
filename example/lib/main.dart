@@ -115,19 +115,26 @@ class _MyHomePageState extends State<MyHomePage> {
             MetroAppBar(
               primaryCommands: [
                 PrimaryCommand(
-                    onPressed: () {}, pic: Icons.ac_unit, text: "First unnes"),
+                    onPressed: () {},
+                    color: Colors.green,
+                    pic: Icons.account_balance_rounded,
+                    text: "Command 1"),
                 PrimaryCommand(
-                    onPressed: () {}, pic: Icons.ac_unit, text: "First unnes"),
+                    onPressed: () {},
+                    pic: Icons.ac_unit,
+                    color: Colors.amber,
+                    text: "Lorem command"),
                 PrimaryCommand(
-                    onPressed: () {}, pic: Icons.ac_unit, text: "First unnes"),
+                    onPressed: () {},
+                    pic: Icons.ac_unit,
+                    text: "Ipsum command"),
                 PrimaryCommand(
-                    onPressed: () {}, pic: Icons.ac_unit, text: "First unnes"),
+                    onPressed: () {}, pic: Icons.ac_unit, text: "Dolor"),
                 PrimaryCommand(
-                    onPressed: () {}, pic: Icons.ac_unit, text: "First unnes")
+                    onPressed: () {}, pic: Icons.ac_unit, text: "Next")
               ],
               secondaryCommands: [
-                SecondaryCommand(
-                    commandName: "one", onPressed: () {}, text: "Review")
+                SecondaryCommand(onPressed: () {}, text: "Review")
               ],
             ),
           ],
