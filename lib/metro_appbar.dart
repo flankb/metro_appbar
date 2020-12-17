@@ -49,31 +49,35 @@ class PrimaryCommand extends StatelessWidget {
   final IconData pic;
   final Color color;
   final String text;
+  final double width;
 
   const PrimaryCommand({
     Key key,
     @required this.onPressed,
     @required this.pic,
     this.color,
-    @required this.text,
+    this.text,
+    this.width,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 56, maxHeight: 56, maxWidth: 110),
+      constraints: BoxConstraints(
+          /*minHeight: 56, maxHeight: 56,*/ maxWidth: width ?? 96),
       child: FlatButton(
         onPressed: onPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 28, child: Icon(pic, color: color)),
-            Text(
-              text,
-              maxLines: 1,
-              style: TextStyle(fontSize: 10), // Add color?
-              overflow: TextOverflow.ellipsis,
-            )
+            if (text != null)
+              Text(
+                text,
+                maxLines: 1,
+                style: TextStyle(fontSize: 10, color: color), // Add color?
+                overflow: TextOverflow.ellipsis,
+              )
           ],
         ),
       ),
@@ -82,15 +86,17 @@ class PrimaryCommand extends StatelessWidget {
 }
 
 class MetroAppBar extends StatefulWidget {
-  final Color backgroundColor;
   final List<Widget> primaryCommands;
   final List<Widget> secondaryCommands;
+  final Color backgroundColor;
+  final double height;
 
   const MetroAppBar(
       {Key key,
       @required this.primaryCommands,
       this.secondaryCommands,
-      this.backgroundColor})
+      this.backgroundColor,
+      this.height})
       : super(key: key);
 
   @override
@@ -99,34 +105,57 @@ class MetroAppBar extends StatefulWidget {
 
 class _MetroAppBarState extends State<MetroAppBar>
     with SingleTickerProviderStateMixin {
-  Map<int, Widget> _secondaryCommandWraps;
+  Map<int, Widget> _secondaryCommandWraps = Map();
+  double _backgroundColorLuminance;
+
+  _updateProperties() {
+    _secondaryCommandWraps.clear();
+    _backgroundColorLuminance = widget.backgroundColor == null
+        ? 1
+        : widget.backgroundColor.computeLuminance();
+
+    widget.secondaryCommands.asMap().forEach((index, value) {
+      _secondaryCommandWraps[index] = value;
+    });
+
+    debugPrint("Luminance $_backgroundColorLuminance");
+  }
 
   @override
   void initState() {
     super.initState();
+    _updateProperties();
+  }
 
-    // Сделаем словарь к которому по ключу генерируемой команды привяжем Виджет
-    // TODO Проверить, что перестраивается при ребилде
-    widget.secondaryCommands.asMap().forEach((index, value) {
-      _secondaryCommandWraps[index] = value;
-    });
+  @override
+  void didUpdateWidget(covariant MetroAppBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateProperties();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      height: 56,
+      height: widget.height ?? 56,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Theme.of(context).bottomAppBarColor,
+          color: widget.backgroundColor ??
+              (theme != null ? theme.bottomAppBarColor : Colors.white),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).brightness == Brightness.dark
+              color: theme != null && theme.brightness == Brightness.dark
                   ? const Color(0xff3F3C3C)
                   : const Color(0xffd3d3d3),
-              blurRadius: 1.0,
-              spreadRadius: 0.0,
-              offset: Offset(0.3, 0.3), // shadow direction: bottom right
+              //color: Colors.grey,
+              blurRadius: 5.5 - _backgroundColorLuminance,
+              spreadRadius: 0.5,
+              offset: Offset(
+                  0,
+                  0.5 -
+                      (1 - _backgroundColorLuminance) *
+                          2), // shadow direction: bottom right
             )
           ],
           borderRadius: new BorderRadius.horizontal(
@@ -147,6 +176,10 @@ class _MetroAppBarState extends State<MetroAppBar>
                 widget.secondaryCommands != null &&
                         widget.secondaryCommands.any((element) => true)
                     ? PopupMenuButton<int>(
+                        color: widget.backgroundColor ??
+                            (theme != null
+                                ? theme.bottomAppBarColor
+                                : Colors.white),
                         onSelected: (command) {
                           // Определить нужную команду
                           final cmdWidget = _secondaryCommandWraps[command];
