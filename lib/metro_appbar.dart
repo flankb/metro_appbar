@@ -90,13 +90,17 @@ class MetroAppBar extends StatefulWidget {
   final List<Widget> secondaryCommands;
   final Color backgroundColor;
   final double height;
+  final BorderRadius borderRadius;
+  final double elevation;
 
   const MetroAppBar(
       {Key key,
       @required this.primaryCommands,
       this.secondaryCommands,
       this.backgroundColor,
-      this.height})
+      this.height,
+      this.borderRadius = BorderRadius.zero,
+      this.elevation = 12})
       : super(key: key);
 
   @override
@@ -114,9 +118,11 @@ class _MetroAppBarState extends State<MetroAppBar>
     //     ? 1
     //     : widget.backgroundColor.computeLuminance();
 
-    widget.secondaryCommands.asMap().forEach((index, value) {
-      _secondaryCommandWraps[index] = value;
-    });
+    if (widget.secondaryCommands != null) {
+      widget.secondaryCommands.asMap().forEach((index, value) {
+        _secondaryCommandWraps[index] = value;
+      });
+    }
 
     //debugPrint("Luminance $_backgroundColorLuminance");
   }
@@ -138,14 +144,14 @@ class _MetroAppBarState extends State<MetroAppBar>
     final theme = Theme.of(context);
 
     return Material(
-      elevation: 12,
+      elevation: widget.elevation,
       type: MaterialType.card,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: widget.borderRadius,
       child: Container(
         height: widget.height ?? 56,
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: widget.borderRadius,
           color: widget.backgroundColor ??
               (theme != null ? theme.bottomAppBarColor : Colors.white),
           // boxShadow: [

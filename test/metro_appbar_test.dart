@@ -24,7 +24,6 @@ void main() {
 
     await widgetTester.tap(find.text('Secondary'));
     await widgetTester.pump(); // return the future
-    //await widgetTester.pump(const Duration(seconds: 1));
 
     state =
         widgetTester.state<MyTestHomePageState>(find.byType(MyTestHomePage));
