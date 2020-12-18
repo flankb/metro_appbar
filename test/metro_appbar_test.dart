@@ -19,11 +19,15 @@ void main() {
 
     await widgetTester.tap(find.byType(getType<PopupMenuButton<int>>()));
     await widgetTester.pump();
-    await widgetTester.tap(find.text('Secondary'));
+    await widgetTester
+        .pump(const Duration(seconds: 1)); // Finish menu animation
 
-    await widgetTester.pump();
+    await widgetTester.tap(find.text('Secondary'));
+    await widgetTester.pump(); // return the future
+    //await widgetTester.pump(const Duration(seconds: 1));
+
     state =
         widgetTester.state<MyTestHomePageState>(find.byType(MyTestHomePage));
-    //expect(state.pushedButtonText, "Secondary");
+    expect(state.pushedButtonText, "Secondary");
   });
 }
