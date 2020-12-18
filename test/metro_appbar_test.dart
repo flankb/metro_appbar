@@ -1,13 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:metro_appbar/metro_appbar.dart';
+import 'test_app.dart';
+
+Type getType<T>() => T;
 
 void main() {
-  test('adds one to input values', () {
-    // final calculator = Calculator();
-    // expect(calculator.addOne(2), 3);
-    // expect(calculator.addOne(-7), -6);
-    // expect(calculator.addOne(0), 1);
-    // expect(() => calculator.addOne(null), throwsNoSuchMethodError);
+  testWidgets('MetroAppBar test', (WidgetTester widgetTester) async {
+    await widgetTester.pumpWidget(TestApp());
+
+    MyTestHomePageState state =
+        widgetTester.state<MyTestHomePageState>(find.byType(MyTestHomePage));
+
+    await widgetTester.tap(find.text("Ipsum"));
+    await widgetTester.pump();
+
+    expect(state.pushedButtonText, "Ipsum");
+
+    await widgetTester.tap(find.byType(getType<PopupMenuButton<int>>()));
+    await widgetTester.pump();
+    await widgetTester.tap(find.text('Secondary'));
+
+    await widgetTester.pump();
+    state =
+        widgetTester.state<MyTestHomePageState>(find.byType(MyTestHomePage));
+    //expect(state.pushedButtonText, "Secondary");
   });
 }
