@@ -106,19 +106,19 @@ class MetroAppBar extends StatefulWidget {
 class _MetroAppBarState extends State<MetroAppBar>
     with SingleTickerProviderStateMixin {
   Map<int, Widget> _secondaryCommandWraps = Map();
-  double _backgroundColorLuminance;
+  //double _backgroundColorLuminance;
 
   _updateProperties() {
     _secondaryCommandWraps.clear();
-    _backgroundColorLuminance = widget.backgroundColor == null
-        ? 1
-        : widget.backgroundColor.computeLuminance();
+    // _backgroundColorLuminance = widget.backgroundColor == null
+    //     ? 1
+    //     : widget.backgroundColor.computeLuminance();
 
     widget.secondaryCommands.asMap().forEach((index, value) {
       _secondaryCommandWraps[index] = value;
     });
 
-    debugPrint("Luminance $_backgroundColorLuminance");
+    //debugPrint("Luminance $_backgroundColorLuminance");
   }
 
   @override
@@ -137,68 +137,71 @@ class _MetroAppBarState extends State<MetroAppBar>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container(
-      height: widget.height ?? 56,
-      width: double.infinity,
-      decoration: BoxDecoration(
+    return Material(
+      elevation: 12,
+      type: MaterialType.card,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        height: widget.height ?? 56,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
           color: widget.backgroundColor ??
               (theme != null ? theme.bottomAppBarColor : Colors.white),
-          boxShadow: [
-            BoxShadow(
-              color: theme != null && theme.brightness == Brightness.dark
-                  ? const Color(0xff3F3C3C)
-                  : const Color(0xffd3d3d3),
-              //color: Colors.grey,
-              blurRadius: 5.5 - _backgroundColorLuminance,
-              spreadRadius: 0.5,
-              offset: Offset(
-                  0,
-                  0.5 -
-                      (1 - _backgroundColorLuminance) *
-                          2), // shadow direction: bottom right
-            )
-          ],
-          borderRadius: new BorderRadius.horizontal(
-            left: new Radius.circular(0.0),
-            right: new Radius.circular(0.0),
-          )),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: SingleChildScrollView(
-            reverse: true,
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                for (var pc in widget.primaryCommands) pc,
-                widget.secondaryCommands != null &&
-                        widget.secondaryCommands.any((element) => true)
-                    ? PopupMenuButton<int>(
-                        color: widget.backgroundColor ??
-                            (theme != null
-                                ? theme.bottomAppBarColor
-                                : Colors.white),
-                        onSelected: (command) {
-                          // Определить нужную команду
-                          final cmdWidget = _secondaryCommandWraps[command];
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: theme != null && theme.brightness == Brightness.dark
+          //         ? const Color(0xff3F3C3C)
+          //         : const Color(0xffd3d3d3),
+          //     //color: Colors.grey,
+          //     blurRadius: 5.5,
+          //     spreadRadius: 0.5,
+          //     offset: Offset(0, 0.5), // shadow direction: bottom right
+          //   )
+          // ],
+          // borderRadius: new BorderRadius.horizontal(
+          //   left: new Radius.circular(0.0),
+          //   right: new Radius.circular(0.0),
+          // )
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: SingleChildScrollView(
+              reverse: true,
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  for (var pc in widget.primaryCommands) pc,
+                  widget.secondaryCommands != null &&
+                          widget.secondaryCommands.any((element) => true)
+                      ? PopupMenuButton<int>(
+                          color: widget.backgroundColor ??
+                              (theme != null
+                                  ? theme.bottomAppBarColor
+                                  : Colors.white),
+                          onSelected: (command) {
+                            // Определить нужную команду
+                            final cmdWidget = _secondaryCommandWraps[command];
 
-                          if (cmdWidget is SecondaryCommand) {
-                            cmdWidget.onPressed();
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return _secondaryCommandWraps.entries.map((e) {
-                            return PopupMenuItem<int>(
-                              value: e.key,
-                              child: e.value,
-                            );
-                          }).toList();
-                        },
-                      )
-                    : SizedBox()
-              ],
+                            if (cmdWidget is SecondaryCommand) {
+                              cmdWidget.onPressed();
+                            }
+                          },
+                          itemBuilder: (BuildContext context) {
+                            return _secondaryCommandWraps.entries.map((e) {
+                              return PopupMenuItem<int>(
+                                value: e.key,
+                                child: e.value,
+                              );
+                            }).toList();
+                          },
+                        )
+                      : SizedBox()
+                ],
+              ),
             ),
           ),
         ),
