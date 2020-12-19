@@ -4,18 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 /// Collapsed command in Popup Menu.
-/// One of child or [text] with [onPressed] may be provided, but not both
 class SecondaryCommand extends StatelessWidget {
-  //final String commandName;
-
-  /// Func will emited on click if you pass [text]
+  /// Function that will invoked on click
   final VoidCallback onPressed;
 
-  /// If provided, the [text] is used for this command
-  /// and the item will behave like an [Text].
+  /// The displayed text of the this menu item
   final String text;
 
-  /// You may pass style of text if you provide [text]
+  /// You may pass style of [text] if you provide
   final TextStyle style;
 
   SecondaryCommand({
@@ -30,17 +26,28 @@ class SecondaryCommand extends StatelessWidget {
   }
 }
 
+/// Primary visible menu item with [icon] and [text]
 class PrimaryCommand extends StatelessWidget {
+  ///Function that will invoked on click
   final VoidCallback onPressed;
-  final IconData pic;
+
+  /// Icon that reltive to this command
+  final IconData icon;
+
+  /// Color for [icon] and [text]
   final Color color;
+
+  /// Text that displayed in menu button
+  /// if pass null, only icon will be visible
   final String text;
+
+  /// Width of this button
   final double width;
 
   const PrimaryCommand({
     Key key,
     @required this.onPressed,
-    @required this.pic,
+    @required this.icon,
     this.color,
     this.text,
     this.width,
@@ -55,7 +62,7 @@ class PrimaryCommand extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 28, child: Icon(pic, color: color)),
+            SizedBox(height: 28, child: Icon(icon, color: color)),
             if (text != null)
               Text(
                 text,
@@ -70,12 +77,25 @@ class PrimaryCommand extends StatelessWidget {
   }
 }
 
+/// Menu with visible [primaryCommands] and collapsed [secondaryCommands]
 class MetroAppBar extends StatefulWidget {
+  /// Visible menu items with a picture and optional text
   final List<Widget> primaryCommands;
+
+  /// Hidden in the pop-up menu commands with text
   final List<Widget> secondaryCommands;
+
+  /// Color of whole [MetroAppBar]
   final Color backgroundColor;
+
+  /// Height of [MetroAppBar]
   final double height;
+
+  /// Radius of whole [MetroAppBar]
   final BorderRadius borderRadius;
+
+  /// The degree of the imaginary height of the element above the substrate.
+  /// Adjusts the size of the shadow
   final double elevation;
 
   const MetroAppBar(
