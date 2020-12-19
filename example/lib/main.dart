@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'MetroAppBar sample',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        brightness: Brightness.dark,
+        //brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'MetroAppBar sample'),
@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       _setPushedButtonText("Velit");
                     },
-                    pic: Icons.event_note, /*text: "Next"*/
+                    pic: Icons.event_note,
                   )
                 ],
                 secondaryCommands: _currentStyle.withSecondary
@@ -170,15 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 60.0),
-      //   child: FloatingActionButton(
-      //     onPressed: _incrementCounter,
-      //     tooltip: 'Increment',
-      //     child: Icon(Icons.add),
-      //   ),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

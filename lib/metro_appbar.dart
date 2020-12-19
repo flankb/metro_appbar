@@ -3,13 +3,6 @@ library metro_appbar;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-// abstract class SimpleCommand {
-//   final String commandName;
-//   final VoidCallback onPressed;
-
-//   SimpleCommand(this.commandName, this.onPressed);
-// }
-
 /// Collapsed command in Popup Menu.
 /// One of child or [text] with [onPressed] may be provided, but not both
 class SecondaryCommand extends StatelessWidget {
@@ -25,22 +18,15 @@ class SecondaryCommand extends StatelessWidget {
   /// You may pass style of text if you provide [text]
   final TextStyle style;
 
-  // /// Provide widget represented this Item
-  // /// If provided, [child] is the widget used for this button
-  // /// and the button will utilize an [InkWell] for taps.
-  // final Widget child;
-
   SecondaryCommand({
-    //@required this.commandName,
     @required this.onPressed,
-    this.text,
+    @required this.text,
     this.style,
-    /*this.child*/
-  }) : assert(text != null /* || child != null*/);
+  }) : assert(text != null);
 
   @override
   Widget build(BuildContext context) {
-    return /*child ??*/ Text(text, style: style);
+    return Text(text, style: style);
   }
 }
 
@@ -63,8 +49,7 @@ class PrimaryCommand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(
-          /*minHeight: 56, maxHeight: 56,*/ maxWidth: width ?? 82),
+      constraints: BoxConstraints(maxWidth: width ?? 82),
       child: FlatButton(
         onPressed: onPressed,
         child: Column(
@@ -110,21 +95,15 @@ class MetroAppBar extends StatefulWidget {
 class _MetroAppBarState extends State<MetroAppBar>
     with SingleTickerProviderStateMixin {
   Map<int, Widget> _secondaryCommandWraps = Map();
-  //double _backgroundColorLuminance;
 
   _updateProperties() {
     _secondaryCommandWraps.clear();
-    // _backgroundColorLuminance = widget.backgroundColor == null
-    //     ? 1
-    //     : widget.backgroundColor.computeLuminance();
 
     if (widget.secondaryCommands != null) {
       widget.secondaryCommands.asMap().forEach((index, value) {
         _secondaryCommandWraps[index] = value;
       });
     }
-
-    //debugPrint("Luminance $_backgroundColorLuminance");
   }
 
   @override
@@ -154,21 +133,6 @@ class _MetroAppBarState extends State<MetroAppBar>
           borderRadius: widget.borderRadius,
           color: widget.backgroundColor ??
               (theme != null ? theme.bottomAppBarColor : Colors.white),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: theme != null && theme.brightness == Brightness.dark
-          //         ? const Color(0xff3F3C3C)
-          //         : const Color(0xffd3d3d3),
-          //     //color: Colors.grey,
-          //     blurRadius: 5.5,
-          //     spreadRadius: 0.5,
-          //     offset: Offset(0, 0.5), // shadow direction: bottom right
-          //   )
-          // ],
-          // borderRadius: new BorderRadius.horizontal(
-          //   left: new Radius.circular(0.0),
-          //   right: new Radius.circular(0.0),
-          // )
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
