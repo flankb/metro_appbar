@@ -64,7 +64,7 @@ class PrimaryCommand extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-          /*minHeight: 56, maxHeight: 56,*/ maxWidth: width ?? 96),
+          /*minHeight: 56, maxHeight: 56,*/ maxWidth: width ?? 82),
       child: FlatButton(
         onPressed: onPressed,
         child: Column(
@@ -174,40 +174,47 @@ class _MetroAppBarState extends State<MetroAppBar>
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Align(
             alignment: Alignment.centerRight,
-            child: SingleChildScrollView(
-              reverse: true,
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  for (var pc in widget.primaryCommands) pc,
-                  widget.secondaryCommands != null &&
-                          widget.secondaryCommands.any((element) => true)
-                      ? PopupMenuButton<int>(
-                          color: widget.backgroundColor ??
-                              (theme != null
-                                  ? theme.bottomAppBarColor
-                                  : Colors.white),
-                          onSelected: (command) {
-                            // Определить нужную команду
-                            final cmdWidget = _secondaryCommandWraps[command];
+            child: Row(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    reverse: true,
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        for (var pc in widget.primaryCommands)
+                          Tooltip(message: "Tooltip", child: pc),
+                      ],
+                    ),
+                  ),
+                ),
+                widget.secondaryCommands != null &&
+                        widget.secondaryCommands.any((element) => true)
+                    ? PopupMenuButton<int>(
+                        color: widget.backgroundColor ??
+                            (theme != null
+                                ? theme.bottomAppBarColor
+                                : Colors.white),
+                        onSelected: (command) {
+                          // Определить нужную команду
+                          final cmdWidget = _secondaryCommandWraps[command];
 
-                            if (cmdWidget is SecondaryCommand) {
-                              cmdWidget.onPressed();
-                            }
-                          },
-                          itemBuilder: (BuildContext context) {
-                            return _secondaryCommandWraps.entries.map((e) {
-                              return PopupMenuItem<int>(
-                                value: e.key,
-                                child: e.value,
-                              );
-                            }).toList();
-                          },
-                        )
-                      : SizedBox()
-                ],
-              ),
+                          if (cmdWidget is SecondaryCommand) {
+                            cmdWidget.onPressed();
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return _secondaryCommandWraps.entries.map((e) {
+                            return PopupMenuItem<int>(
+                              value: e.key,
+                              child: e.value,
+                            );
+                          }).toList();
+                        },
+                      )
+                    : SizedBox()
+              ],
             ),
           ),
         ),

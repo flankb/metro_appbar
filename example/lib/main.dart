@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'MetroAppBar sample',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        //brightness: Brightness.dark,
+        brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'MetroAppBar sample'),
@@ -131,12 +131,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: "Eiusmod"),
                   PrimaryCommand(
                       onPressed: () {
-                        _setPushedButtonText("Lorem ipsum dolor");
+                        _setPushedButtonText("Reprehenderit qui");
                       },
                       pic: Icons.ac_unit,
                       color: Colors.amber,
                       width: 80,
-                      text: "Lorem ipsum dolor"),
+                      text: "Reprehenderit qui"),
                   PrimaryCommand(
                       onPressed: () {
                         _setPushedButtonText("Ipsum");
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   PrimaryCommand(
                     color: _currentStyle.firstButtonColor,
                     onPressed: () {
-                      _setPushedButtonText("Empty");
+                      _setPushedButtonText("Velit");
                     },
                     pic: Icons.event_note, /*text: "Next"*/
                   )
@@ -161,9 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? [
                         SecondaryCommand(
                             onPressed: () {
-                              _setPushedButtonText("Secondary");
+                              _setPushedButtonText("Commodo");
                             },
-                            text: "Secondary")
+                            text: "Commodo")
                       ]
                     : null,
               ),
