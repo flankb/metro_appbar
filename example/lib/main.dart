@@ -11,8 +11,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MetroAppBar sample',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+
         //brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -44,7 +46,7 @@ class AppBarStyle {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<AppBarStyle> _styles = [
-    AppBarStyle(null, Colors.amber, null, BorderRadius.zero, EdgeInsets.all(0)),
+    AppBarStyle(null, Colors.red, null, BorderRadius.zero, EdgeInsets.all(0)),
     AppBarStyle(Colors.pink[50], Colors.green, 60, BorderRadius.circular(12),
         EdgeInsets.all(8)),
     AppBarStyle(Colors.green[100], Colors.purple, 72, BorderRadius.zero,
@@ -100,21 +102,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       '$_pushedButtonText',
                       style: Theme.of(context).textTheme.headline4,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: RawMaterialButton(
+                        padding: const EdgeInsets.all(6.0),
+                        onPressed: () {
+                          _updateStyle();
+                        },
+                        fillColor: Colors.blue,
+                        child: Text(
+                          'Change style',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ]),
             )),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: RawMaterialButton(
-                  onPressed: () {
-                    _updateStyle();
-                  },
-                  fillColor: Colors.blue,
-                  child: Text('Change style'),
-                ),
-              ),
-            ),
             Padding(
               padding: _currentStyle.padding,
               child: MetroAppBar(
@@ -127,13 +130,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         _setPushedButtonText("Eiusmod");
                       },
                       color: Colors.green,
-                      pic: Icons.account_balance_rounded,
+                      icon: Icons.account_balance_rounded,
                       text: "Eiusmod"),
                   PrimaryCommand(
                       onPressed: () {
                         _setPushedButtonText("Reprehenderit qui");
                       },
-                      pic: Icons.ac_unit,
+                      icon: Icons.ac_unit,
                       color: Colors.amber,
                       width: 80,
                       text: "Reprehenderit qui"),
@@ -141,20 +144,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         _setPushedButtonText("Ipsum");
                       },
-                      pic: Icons.accessible_outlined,
+                      icon: Icons.accessible_outlined,
                       text: "Ipsum"),
                   PrimaryCommand(
                       onPressed: () {
                         _setPushedButtonText("Dolor");
                       },
-                      pic: Icons.picture_in_picture_alt_rounded,
+                      icon: Icons.picture_in_picture_alt_rounded,
                       text: "Dolor"),
                   PrimaryCommand(
                     color: _currentStyle.firstButtonColor,
                     onPressed: () {
                       _setPushedButtonText("Velit");
                     },
-                    pic: Icons.event_note,
+                    icon: Icons.event_note,
                   )
                 ],
                 secondaryCommands: _currentStyle.withSecondary
@@ -163,7 +166,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () {
                               _setPushedButtonText("Commodo");
                             },
-                            text: "Commodo")
+                            text: "Commodo"),
+                        SecondaryCommand(
+                            onPressed: () {
+                              _setPushedButtonText("Officia");
+                            },
+                            text: "Officia"),
                       ]
                     : null,
               ),
