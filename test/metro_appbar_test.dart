@@ -9,13 +9,13 @@ void main() {
   testWidgets('MetroAppBar test', (WidgetTester widgetTester) async {
     await widgetTester.pumpWidget(TestApp());
 
-    MyTestHomePageState state =
+    var state =
         widgetTester.state<MyTestHomePageState>(find.byType(MyTestHomePage));
 
-    await widgetTester.tap(find.text("Ipsum"));
+    await widgetTester.tap(find.text('Ipsum'));
     await widgetTester.pump();
 
-    expect(state.pushedButtonText, "Ipsum");
+    expect(state.pushedButtonText, 'Ipsum');
 
     await widgetTester.tap(find.byType(getType<PopupMenuButton<int>>()));
     await widgetTester.pump();
@@ -27,6 +27,6 @@ void main() {
 
     state =
         widgetTester.state<MyTestHomePageState>(find.byType(MyTestHomePage));
-    expect(state.pushedButtonText, "Secondary");
+    expect(state.pushedButtonText, 'Secondary');
   });
 }

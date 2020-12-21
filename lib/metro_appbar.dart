@@ -118,9 +118,9 @@ class MetroAppBar extends StatefulWidget {
 
 class _MetroAppBarState extends State<MetroAppBar>
     with SingleTickerProviderStateMixin {
-  Map<int, Widget> _secondaryCommandWraps = Map();
+  final Map<int, Widget> _secondaryCommandWraps = {};
 
-  _updateProperties() {
+  void _updateProperties() {
     _secondaryCommandWraps.clear();
 
     if (widget.secondaryCommands != null) {

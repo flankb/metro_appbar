@@ -26,7 +26,7 @@ class MyTestHomePage extends StatefulWidget {
 }
 
 class MyTestHomePageState extends State<MyTestHomePage> {
-  String pushedButtonText = "";
+  String pushedButtonText = '';
 
   void _setPushedButtonText(String text) {
     setState(() {
@@ -66,35 +66,35 @@ class MyTestHomePageState extends State<MyTestHomePage> {
               primaryCommands: [
                 PrimaryCommand(
                     onPressed: () {
-                      _setPushedButtonText("Eiusmod");
+                      _setPushedButtonText('Eiusmod');
                     },
                     color: Colors.green,
                     icon: Icons.account_balance_rounded,
-                    text: "Eiusmod"),
+                    text: 'Eiusmod'),
                 PrimaryCommand(
                     onPressed: () {
-                      _setPushedButtonText("Lorem ipsum dolor");
+                      _setPushedButtonText('Lorem ipsum dolor');
                     },
                     icon: Icons.ac_unit,
                     color: Colors.amber,
                     width: 80,
-                    text: "Lorem ipsum dolor"),
+                    text: 'Lorem ipsum dolor'),
                 PrimaryCommand(
                     onPressed: () {
-                      _setPushedButtonText("Ipsum");
+                      _setPushedButtonText('Ipsum');
                     },
                     icon: Icons.accessible_outlined,
-                    text: "Ipsum"),
+                    text: 'Ipsum'),
                 PrimaryCommand(
                     onPressed: () {
-                      _setPushedButtonText("Dolor");
+                      _setPushedButtonText('Dolor');
                     },
                     icon: Icons.picture_in_picture_alt_rounded,
-                    text: "Dolor"),
+                    text: 'Dolor'),
                 PrimaryCommand(
                   //color: _currentStyle.firstButtonColor,
                   onPressed: () {
-                    _setPushedButtonText("Empty");
+                    _setPushedButtonText('Empty');
                   },
                   icon: Icons.event_note, /*text: "Next"*/
                 )
@@ -102,9 +102,9 @@ class MyTestHomePageState extends State<MyTestHomePage> {
               secondaryCommands: [
                 SecondaryCommand(
                     onPressed: () {
-                      _setPushedButtonText("Secondary");
+                      _setPushedButtonText('Secondary');
                     },
-                    text: "Secondary")
+                    text: 'Secondary')
               ],
             ),
           ],

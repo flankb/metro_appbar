@@ -43,7 +43,7 @@ class AppBarStyle {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<AppBarStyle> _styles = [
+  final List<AppBarStyle> _styles = [
     AppBarStyle(null, Colors.red, null, BorderRadius.zero, EdgeInsets.all(0)),
     AppBarStyle(Colors.pink[50], Colors.green, 60, BorderRadius.circular(12),
         EdgeInsets.fromLTRB(8, 8, 8, 12)),
@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         withSecondary: false),
   ];
 
-  String _pushedButtonText = "";
+  String _pushedButtonText = '';
   AppBarStyle _currentStyle;
 
   void _setPushedButtonText(String text) {
@@ -126,35 +126,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 primaryCommands: [
                   PrimaryCommand(
                       onPressed: () {
-                        _setPushedButtonText("Eiusmod");
+                        _setPushedButtonText('Eiusmod');
                       },
                       color: Colors.green,
                       icon: Icons.account_balance_rounded,
-                      text: "Eiusmod"),
+                      text: 'Eiusmod'),
                   PrimaryCommand(
                       onPressed: () {
-                        _setPushedButtonText("Reprehenderit qui");
+                        _setPushedButtonText('Reprehenderit qui');
                       },
                       icon: Icons.ac_unit,
                       color: Colors.amber,
                       width: 80,
-                      text: "Reprehenderit qui"),
+                      text: 'Reprehenderit qui'),
                   PrimaryCommand(
                       onPressed: () {
-                        _setPushedButtonText("Ipsum");
+                        _setPushedButtonText('Ipsum');
                       },
                       icon: Icons.accessible_outlined,
-                      text: "Ipsum"),
+                      text: 'Ipsum'),
                   PrimaryCommand(
                       onPressed: () {
-                        _setPushedButtonText("Dolor");
+                        _setPushedButtonText('Dolor');
                       },
                       icon: Icons.picture_in_picture_alt_rounded,
-                      text: "Dolor"),
+                      text: 'Dolor'),
                   PrimaryCommand(
                     color: _currentStyle.firstButtonColor,
                     onPressed: () {
-                      _setPushedButtonText("Velit");
+                      _setPushedButtonText('Velit');
                     },
                     icon: Icons.event_note,
                   )
@@ -163,14 +163,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? [
                         SecondaryCommand(
                             onPressed: () {
-                              _setPushedButtonText("Commodo");
+                              _setPushedButtonText('Commodo');
                             },
-                            text: "Commodo"),
+                            text: 'Commodo'),
                         SecondaryCommand(
                             onPressed: () {
-                              _setPushedButtonText("Officia");
+                              _setPushedButtonText('Officia');
                             },
-                            text: "Officia"),
+                            text: 'Officia'),
                       ]
                     : null,
               ),
