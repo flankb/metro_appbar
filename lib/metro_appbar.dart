@@ -88,6 +88,9 @@ class MetroAppBar extends StatefulWidget {
   /// Color of whole [MetroAppBar]
   final Color backgroundColor;
 
+  /// Color of icon of button that open secondary menu
+  final Color secondaryOpenButtonColor;
+
   /// Height of [MetroAppBar]
   final double height;
 
@@ -105,7 +108,8 @@ class MetroAppBar extends StatefulWidget {
       this.backgroundColor,
       this.height,
       this.borderRadius = BorderRadius.zero,
-      this.elevation = 12})
+      this.elevation = 12,
+      this.secondaryOpenButtonColor})
       : super(key: key);
 
   @override
@@ -141,64 +145,68 @@ class _MetroAppBarState extends State<MetroAppBar>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final height = widget.height ?? 56;
 
     return Material(
       elevation: widget.elevation,
       type: MaterialType.card,
       borderRadius: widget.borderRadius,
-      child: Container(
-        height: widget.height ?? 56,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: widget.borderRadius,
-          color: widget.backgroundColor ??
-              (theme != null ? theme.bottomAppBarColor : Colors.white),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Row(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        for (var pc in widget.primaryCommands)
-                          Tooltip(message: "Tooltip", child: pc),
-                      ],
+      child: ClipRRect(
+        borderRadius: widget.borderRadius,
+        child: Container(
+          height: height,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            // borderRadius: widget.borderRadius,
+            color: widget.backgroundColor ??
+                (theme != null ? theme.bottomAppBarColor : Colors.white),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          for (var pc in widget.primaryCommands) pc,
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                widget.secondaryCommands != null &&
-                        widget.secondaryCommands.any((element) => true)
-                    ? PopupMenuButton<int>(
-                        color: widget.backgroundColor ??
-                            (theme != null
-                                ? theme.bottomAppBarColor
-                                : Colors.white),
-                        onSelected: (command) {
-                          // Определить нужную команду
-                          final cmdWidget = _secondaryCommandWraps[command];
+                  widget.secondaryCommands != null &&
+                          widget.secondaryCommands.any((element) => true)
+                      ? PopupMenuButton<int>(
+                          icon: Icon(Icons.more_vert,
+                              color: widget.secondaryOpenButtonColor),
+                          color: widget.backgroundColor ??
+                              (theme != null
+                                  ? theme.bottomAppBarColor
+                                  : Colors.white),
+                          onSelected: (command) {
+                            final cmdWidget = _secondaryCommandWraps[command];
 
-                          if (cmdWidget is SecondaryCommand) {
-                            cmdWidget.onPressed();
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return _secondaryCommandWraps.entries.map((e) {
-                            return PopupMenuItem<int>(
-                              value: e.key,
-                              child: e.value,
-                            );
-                          }).toList();
-                        },
-                      )
-                    : SizedBox()
-              ],
+                            if (cmdWidget is SecondaryCommand) {
+                              cmdWidget.onPressed();
+                            }
+                          },
+                          itemBuilder: (BuildContext context) {
+                            return _secondaryCommandWraps.entries.map((e) {
+                              return PopupMenuItem<int>(
+                                value: e.key,
+                                child: e.value,
+                              );
+                            }).toList();
+                          },
+                        )
+                      : SizedBox()
+                ],
+              ),
             ),
           ),
         ),
