@@ -6,7 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +13,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-
         //brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -48,14 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
   List<AppBarStyle> _styles = [
     AppBarStyle(null, Colors.red, null, BorderRadius.zero, EdgeInsets.all(0)),
     AppBarStyle(Colors.pink[50], Colors.green, 60, BorderRadius.circular(12),
-        EdgeInsets.all(8)),
+        EdgeInsets.fromLTRB(8, 8, 8, 12)),
     AppBarStyle(Colors.green[100], Colors.purple, 72, BorderRadius.zero,
         EdgeInsets.all(0)),
     AppBarStyle(Colors.red, Colors.cyan, null, BorderRadius.circular(36),
         EdgeInsets.all(6),
         withSecondary: false),
     AppBarStyle(Colors.indigo[400], Colors.white, null, BorderRadius.zero,
-        EdgeInsets.all(0)),
+        EdgeInsets.all(0),
+        withSecondary: false),
   ];
 
   String _pushedButtonText = "";
