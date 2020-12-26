@@ -1,7 +1,6 @@
 name: metro_appbar
-description: Custom app bar with simple and readable design
-version: 0.0.1
-author:
+description: Simple app bar with visible and collapsed menu items
+version: 0.1.0
 homepage:
 
 environment:
