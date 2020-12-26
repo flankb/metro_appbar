@@ -1,20 +1,8 @@
 # metro_appbar
 
-Custom app bar with simple and readable design
+Custom app bar with simple and readable design. Customizable buttons and menu style.
 
-
-![](.assets/screencast.gif)
-![](.assets/screenshot.png)
-
-## Include in your project
-```
-dependencies:
-  metro_appbar: ^0.0.1
-```
-run packages get and import it
-```
-import 'package:metro_appbar/metro_appbar.dart';
-```
+![](.assets/screencast_small.gif)
 
 ## Usage
 
@@ -36,9 +24,3 @@ MetroAppBar(primaryCommands: [
   SecondaryCommand(onPressed: () {}, text: 'Officia'),
 ]);
 ```
-
-## Getting Started
-
-For help getting started with Flutter, view our online [documentation](https://flutter.io/).
-
-For help on editing package code, view the [documentation](https://flutter.io/developing-packages/).

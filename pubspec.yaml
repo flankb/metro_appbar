@@ -1,7 +1,7 @@
 name: metro_appbar
-description: Simple app bar with visible and collapsed menu items
+description: Simple app bar with visible and collapsed menu items. Customizable buttons and menu style.
 version: 0.1.0
-homepage:
+homepage: https://github.com/flankb/metro_appbar
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
