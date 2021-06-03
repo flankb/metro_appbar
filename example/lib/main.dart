@@ -22,17 +22,17 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class AppBarStyle {
-  final Color color;
+  final Color? color;
   final Color firstButtonColor;
-  final double height;
+  final double? height;
   final BorderRadius borderRadius;
   final EdgeInsets padding;
   final bool withSecondary;
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   String _pushedButtonText = '';
-  AppBarStyle _currentStyle;
+  late AppBarStyle _currentStyle;
 
   void _setPushedButtonText(String text) {
     setState(() {
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(
