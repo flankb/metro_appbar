@@ -12,13 +12,13 @@ class SecondaryCommand extends StatelessWidget {
   final String text;
 
   /// You may pass style of [text] if you provide
-  final TextStyle style;
+  final TextStyle? style;
 
   SecondaryCommand({
-    @required this.onPressed,
-    @required this.text,
+    required this.onPressed,
+    required this.text,
     this.style,
-  }) : assert(text != null);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +35,19 @@ class PrimaryCommand extends StatelessWidget {
   final IconData icon;
 
   /// Color for [icon] and [text]
-  final Color color;
+  final Color? color;
 
   /// Text that displayed in menu button
   /// if pass null, only icon will be visible
-  final String text;
+  final String? text;
 
   /// Width of this button
-  final double width;
+  final double? width;
 
   const PrimaryCommand({
-    Key key,
-    @required this.onPressed,
-    @required this.icon,
+    Key? key,
+    required this.onPressed,
+    required this.icon,
     this.color,
     this.text,
     this.width,
@@ -57,7 +57,7 @@ class PrimaryCommand extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: width ?? 82),
-      child: FlatButton(
+      child: TextButton(
         onPressed: onPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,7 @@ class PrimaryCommand extends StatelessWidget {
             SizedBox(height: 28, child: Icon(icon, color: color)),
             if (text != null)
               Text(
-                text,
+                text!,
                 maxLines: 1,
                 style: TextStyle(fontSize: 10, color: color), // Add color?
                 overflow: TextOverflow.ellipsis,
@@ -83,16 +83,16 @@ class MetroAppBar extends StatefulWidget {
   final List<Widget> primaryCommands;
 
   /// Hidden in the pop-up menu commands with text
-  final List<Widget> secondaryCommands;
+  final List<Widget>? secondaryCommands;
 
   /// Color of whole [MetroAppBar]
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// Color of icon of button that open secondary menu
-  final Color secondaryOpenButtonColor;
+  final Color? secondaryOpenButtonColor;
 
   /// Height of [MetroAppBar]
-  final double height;
+  final double? height;
 
   /// Radius of whole [MetroAppBar]
   final BorderRadius borderRadius;
@@ -102,8 +102,8 @@ class MetroAppBar extends StatefulWidget {
   final double elevation;
 
   const MetroAppBar(
-      {Key key,
-      @required this.primaryCommands,
+      {Key? key,
+      required this.primaryCommands,
       this.secondaryCommands,
       this.backgroundColor,
       this.height,
@@ -124,7 +124,7 @@ class _MetroAppBarState extends State<MetroAppBar>
     _secondaryCommandWraps.clear();
 
     if (widget.secondaryCommands != null) {
-      widget.secondaryCommands.asMap().forEach((index, value) {
+      widget.secondaryCommands!.asMap().forEach((index, value) {
         _secondaryCommandWraps[index] = value;
       });
     }
@@ -158,8 +158,7 @@ class _MetroAppBarState extends State<MetroAppBar>
           width: double.infinity,
           decoration: BoxDecoration(
             // borderRadius: widget.borderRadius,
-            color: widget.backgroundColor ??
-                (theme != null ? theme.bottomAppBarColor : Colors.white),
+            color: widget.backgroundColor ?? theme.bottomAppBarColor,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -180,14 +179,12 @@ class _MetroAppBarState extends State<MetroAppBar>
                     ),
                   ),
                   widget.secondaryCommands != null &&
-                          widget.secondaryCommands.any((element) => true)
+                          widget.secondaryCommands!.any((element) => true)
                       ? PopupMenuButton<int>(
                           icon: Icon(Icons.more_vert,
                               color: widget.secondaryOpenButtonColor),
-                          color: widget.backgroundColor ??
-                              (theme != null
-                                  ? theme.bottomAppBarColor
-                                  : Colors.white),
+                          color:
+                              widget.backgroundColor ?? theme.bottomAppBarColor,
                           onSelected: (command) {
                             final cmdWidget = _secondaryCommandWraps[command];
 

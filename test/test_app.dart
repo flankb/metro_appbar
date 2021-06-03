@@ -18,8 +18,8 @@ class TestApp extends StatelessWidget {
 }
 
 class MyTestHomePage extends StatefulWidget {
-  MyTestHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyTestHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   MyTestHomePageState createState() => MyTestHomePageState();
@@ -43,7 +43,7 @@ class MyTestHomePageState extends State<MyTestHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(
